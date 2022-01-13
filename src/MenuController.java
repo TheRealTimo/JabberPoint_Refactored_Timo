@@ -12,11 +12,6 @@ import java.io.IOException;
  */
 public class MenuController extends MenuBar {
 
-    private final Frame parent; //The frame, only used as parent for the Dialogs
-    private final Presentation presentation; //Commands are given to the presentation
-
-    private static final long serialVersionUID = 227L;
-
     protected static final String ABOUT = "About";
     protected static final String FILE = "File";
     protected static final String EXIT = "Exit";
@@ -29,13 +24,14 @@ public class MenuController extends MenuBar {
     protected static final String PREV = "Prev";
     protected static final String SAVE = "Save";
     protected static final String VIEW = "View";
-
     protected static final String TESTFILE = "testPresentation.xml";
     protected static final String SAVEFILE = "savedPresentation.xml";
-
     protected static final String IOEX = "IO Exception: ";
     protected static final String LOADERR = "Load Error";
     protected static final String SAVEERR = "Save Error";
+    private static final long serialVersionUID = 227L;
+    private final Frame parent; //The frame, only used as parent for the Dialogs
+    private final Presentation presentation; //Commands are given to the presentation
 
     public MenuController(Frame frame, Presentation pres) {
         parent = frame;
@@ -101,17 +97,15 @@ public class MenuController extends MenuBar {
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 String pageNumberStr = JOptionPane.showInputDialog(PAGENR);
-                if(pageNumberStr.isEmpty()){
+                if (pageNumberStr.isEmpty()) {
                     JOptionPane.showMessageDialog(parent, "Page number cannot be empty");
                 }
                 int pageNumber = Integer.parseInt(pageNumberStr);
-                if(pageNumber <= 0){
+                if (pageNumber <= 0) {
                     JOptionPane.showMessageDialog(parent, "Page number cannot be smaller than 0");
-                }
-                else if(pageNumber >= presentation.getSize() + 1){
+                } else if (pageNumber >= presentation.getSize() + 1) {
                     JOptionPane.showMessageDialog(parent, "Page number cannot be bigger than number of slides available. \n There are " + presentation.getSize() + " slides available");
-                }
-                else{
+                } else {
                     presentation.setSlideNumber(pageNumber - 1);
                 }
             }

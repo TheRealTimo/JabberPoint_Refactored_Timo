@@ -11,14 +11,20 @@ import java.awt.*;
  */
 
 public class Style {
-    private static Style[] styles; // de styles
-
     private static final String FONTNAME = "Helvetica";
+    private static Style[] styles; // de styles
     int indent;
     Color color;
     Font font;
     int fontSize;
     int leading;
+
+    public Style(int indent, Color color, int points, int leading) {
+        this.indent = indent;
+        this.color = color;
+        font = new Font(FONTNAME, Font.BOLD, fontSize = points);
+        this.leading = leading;
+    }
 
     public static void createStyles() {
         styles = new Style[5];
@@ -35,13 +41,6 @@ public class Style {
             level = styles.length - 1;
         }
         return styles[level];
-    }
-
-    public Style(int indent, Color color, int points, int leading) {
-        this.indent = indent;
-        this.color = color;
-        font = new Font(FONTNAME, Font.BOLD, fontSize = points);
-        this.leading = leading;
     }
 
     public String toString() {

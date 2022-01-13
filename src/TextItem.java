@@ -19,9 +19,8 @@ import java.util.List;
  */
 
 public class TextItem extends SlideItem {
-    private final String text;
-
     private static final String EMPTYTEXT = "No Text Given";
+    private final String text;
 
     //A textitem of int level with text string
     public TextItem(int level, String string) {
