@@ -19,10 +19,10 @@ public class SlideViewerComponent extends JComponent {
     private static final int FONTHEIGHT = 10;
     private static final int XPOS = 1100;
     private static final int YPOS = 20;
-    private Slide slide; //The current slide
     private final Font labelFont; //The font for labels
-    private Presentation presentation; //The presentation
     private final JFrame frame;
+    private Slide slide; //The current slide
+    private Presentation presentation; //The presentation
 
     public SlideViewerComponent(Presentation pres, JFrame frame) {
         setBackground(BGCOLOR);

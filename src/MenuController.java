@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import javax.swing.JFileChooser;
+
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 
@@ -28,12 +30,12 @@ public class MenuController extends MenuBar {
     protected static final String PREV = "Prev";
     protected static final String SAVE = "Save";
     protected static final String VIEW = "View";
+    protected static String TESTFILE = "testPresentation.xml";
+    protected static String SAVEFILE = "savedPresentation.xml";
     protected static final String IOEX = "IO Exception: ";
     protected static final String LOADERR = "Load Error";
     protected static final String SAVEERR = "Save Error";
     private static final long serialVersionUID = 227L;
-    protected static String TESTFILE = "testPresentation.xml";
-    protected static String SAVEFILE = "savedPresentation.xml";
     private final Frame parent; //The frame, only used as parent for the Dialogs
     private final Presentation presentation; //Commands are given to the presentation
 
@@ -76,15 +78,15 @@ public class MenuController extends MenuBar {
         fileMenu.add(menuItem = mkMenuItem(NEW));
 
         menuItem.addActionListener(actionEvent -> {
-            String saveFile = saveFile();
-            File samplePresentation = new File("testPresentation.xml");
-            File newPresentation = new File(saveFile);
-            try {
-                Files.copy(samplePresentation.toPath(), newPresentation.toPath());
-                java.awt.Desktop.getDesktop().edit(newPresentation);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                String saveFile = saveFile();
+                File samplePresentation = new File("testPresentation.xml");
+                File newPresentation = new File(saveFile);
+                try {
+                    Files.copy(samplePresentation.toPath(), newPresentation.toPath());
+                    java.awt.Desktop.getDesktop().edit(newPresentation);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
         });
 
@@ -148,7 +150,7 @@ public class MenuController extends MenuBar {
         return new MenuItem(name, new MenuShortcut(name.charAt(0)));
     }
 
-    public String saveFile() {
+    public String saveFile(){
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Save JabberPoint presentation");
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("XML File", "xml"));
