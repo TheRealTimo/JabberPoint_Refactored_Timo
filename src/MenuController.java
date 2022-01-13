@@ -101,8 +101,19 @@ public class MenuController extends MenuBar {
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 String pageNumberStr = JOptionPane.showInputDialog(PAGENR);
+                if(pageNumberStr.isEmpty()){
+                    JOptionPane.showMessageDialog(parent, "Page number cannot be empty");
+                }
                 int pageNumber = Integer.parseInt(pageNumberStr);
-                presentation.setSlideNumber(pageNumber - 1);
+                if(pageNumber <= 0){
+                    JOptionPane.showMessageDialog(parent, "Page number cannot be smaller than 0");
+                }
+                else if(pageNumber >= presentation.getSize() + 1){
+                    JOptionPane.showMessageDialog(parent, "Page number cannot be bigger than number of slides available. \n There are " + presentation.getSize() + " slides available");
+                }
+                else{
+                    presentation.setSlideNumber(pageNumber - 1);
+                }
             }
         });
         add(viewMenu);
