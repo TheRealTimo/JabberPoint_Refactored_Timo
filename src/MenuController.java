@@ -31,7 +31,7 @@ public class MenuController extends MenuBar {
     protected static final String SAVE = "Save";
     protected static final String VIEW = "View";
     protected static String TESTFILE = "testPresentation.xml";
-    protected static final String SAVEFILE = "savedPresentation.xml";
+    protected static String SAVEFILE = "savedPresentation.xml";
     protected static final String IOEX = "IO Exception: ";
     protected static final String LOADERR = "Load Error";
     protected static final String SAVEERR = "Save Error";
@@ -83,6 +83,17 @@ public class MenuController extends MenuBar {
         fileMenu.add(menuItem = mkMenuItem(SAVE));
         menuItem.addActionListener(e -> {
             Accessor xmlAccessor = new XMLAccessor();
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Save JabberPoint presentation");
+            fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("XML File", "xml"));
+            fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+            fileChooser.setAcceptAllFileFilterUsed(false);
+            int userSelection = fileChooser.showSaveDialog(parent);
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File fileToSave = fileChooser.getSelectedFile();
+                System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+                SAVEFILE = fileToSave + ".xml";
+            }
             try {
                 xmlAccessor.saveFile(presentation, SAVEFILE);
             } catch (IOException exc) {
