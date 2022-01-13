@@ -1,5 +1,4 @@
-import java.awt.Rectangle;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.ImageObserver;
 
 /** <p>The abstract class for items on a slide.<p>

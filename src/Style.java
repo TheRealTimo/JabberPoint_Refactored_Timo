@@ -1,5 +1,4 @@
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 
 /** <p>Style stands for Indent, Color, Font and Leading.</p>
  * <p>The link between a style number and a item level is hard-linked:
