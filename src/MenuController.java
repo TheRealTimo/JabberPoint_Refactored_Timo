@@ -1,6 +1,14 @@
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+
+import javax.swing.JFileChooser;
+
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
 
 /**
  * <p>The controller for the menu</p>
@@ -22,7 +30,7 @@ public class MenuController extends MenuBar {
     protected static final String PREV = "Prev";
     protected static final String SAVE = "Save";
     protected static final String VIEW = "View";
-    protected static final String TESTFILE = "testPresentation.xml";
+    protected static String TESTFILE = "testPresentation.xml";
     protected static final String SAVEFILE = "savedPresentation.xml";
     protected static final String IOEX = "IO Exception: ";
     protected static final String LOADERR = "Load Error";
@@ -31,6 +39,7 @@ public class MenuController extends MenuBar {
     private final Frame parent; //The frame, only used as parent for the Dialogs
     private final Presentation presentation; //Commands are given to the presentation
 
+
     public MenuController(Frame frame, Presentation pres) {
         parent = frame;
         presentation = pres;
@@ -38,7 +47,24 @@ public class MenuController extends MenuBar {
         Menu fileMenu = new Menu(FILE);
         fileMenu.add(menuItem = mkMenuItem(OPEN));
         menuItem.addActionListener(actionEvent -> {
-            presentation.clear();
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("XML File", "xml"));
+            fileChooser.setAcceptAllFileFilterUsed(false);
+            int result = fileChooser.showOpenDialog(parent);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                File fileToCopy = new File(selectedFile.toString());
+                File newPresentationFile = new File("openPresentation.xml");
+                try {
+                    Files.copy(fileToCopy.toPath(), newPresentationFile.toPath(), REPLACE_EXISTING);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                TESTFILE = "openPresentation.xml";
+                presentation.clear();
+            }
             Accessor xmlAccessor = new XMLAccessor();
             try {
                 xmlAccessor.loadFile(presentation, TESTFILE);
