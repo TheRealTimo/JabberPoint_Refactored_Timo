@@ -76,9 +76,28 @@ public class MenuController extends MenuBar {
             parent.repaint();
         });
         fileMenu.add(menuItem = mkMenuItem(NEW));
+
         menuItem.addActionListener(actionEvent -> {
-            presentation.clear();
-            parent.repaint();
+
+            Accessor xmlAccessor = new XMLAccessor();
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Save JabberPoint presentation");
+            fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("XML File", "xml"));
+            fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+            fileChooser.setAcceptAllFileFilterUsed(false);
+            int userSelection = fileChooser.showSaveDialog(parent);
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File fileToSave = fileChooser.getSelectedFile();
+                File samplePresentation = new File("testPresentation.xml");
+                File newPresentation = new File(fileToSave.toString() + ".xml");
+                try {
+                    Files.copy(samplePresentation.toPath(), newPresentation.toPath());
+                    java.awt.Desktop.getDesktop().edit(newPresentation);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
         });
         fileMenu.add(menuItem = mkMenuItem(SAVE));
         menuItem.addActionListener(e -> {
