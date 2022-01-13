@@ -16,7 +16,7 @@ public class Slide {
     protected Vector<SlideItem> items; //The SlideItems are kept in a vector
 
     public Slide() {
-        items = new Vector<SlideItem>();
+        items = new Vector<>();
     }
 
     //Add a SlideItem

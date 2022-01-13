@@ -24,11 +24,6 @@ import java.util.Vector;
 public class XMLAccessor extends Accessor {
 
     /**
-     * Default API to use.
-     */
-    protected static final String DEFAULT_API_TO_USE = "dom";
-
-    /**
      * Names of xml tags of attributes
      */
     protected static final String SHOWTITLE = "showtitle";
@@ -55,7 +50,7 @@ public class XMLAccessor extends Accessor {
     }
 
     public void loadFile(Presentation presentation, String filename) throws IOException {
-        int slideNumber, itemNumber, max = 0, maxItems = 0;
+        int slideNumber, itemNumber, max, maxItems;
         try {
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document document = builder.parse(new File(filename)); //Create a JDOM document

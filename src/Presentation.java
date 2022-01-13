@@ -13,7 +13,7 @@ public class Presentation {
     private String showTitle; //The title of the presentation
     private ArrayList<Slide> showList = null; //An ArrayList with slides
     private int currentSlideNumber = 0; //The number of the current slide
-    private SlideViewerComponent slideViewComponent = null; //The view component of the slides
+    private SlideViewerComponent slideViewComponent; //The view component of the slides
 
     public Presentation() {
         slideViewComponent = null;
@@ -70,7 +70,7 @@ public class Presentation {
 
     //Remove the presentation
     void clear() {
-        showList = new ArrayList<Slide>();
+        showList = new ArrayList<>();
         setSlideNumber(-1);
     }
 
