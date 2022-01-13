@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import javax.swing.JFileChooser;
-
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 
@@ -30,12 +28,12 @@ public class MenuController extends MenuBar {
     protected static final String PREV = "Prev";
     protected static final String SAVE = "Save";
     protected static final String VIEW = "View";
-    protected static String TESTFILE = "testPresentation.xml";
-    protected static String SAVEFILE = "savedPresentation.xml";
     protected static final String IOEX = "IO Exception: ";
     protected static final String LOADERR = "Load Error";
     protected static final String SAVEERR = "Save Error";
     private static final long serialVersionUID = 227L;
+    protected static String TESTFILE = "testPresentation.xml";
+    protected static String SAVEFILE = "savedPresentation.xml";
     private final Frame parent; //The frame, only used as parent for the Dialogs
     private final Presentation presentation; //Commands are given to the presentation
 
@@ -78,41 +76,25 @@ public class MenuController extends MenuBar {
         fileMenu.add(menuItem = mkMenuItem(NEW));
 
         menuItem.addActionListener(actionEvent -> {
-
-            Accessor xmlAccessor = new XMLAccessor();
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setDialogTitle("Save JabberPoint presentation");
-            fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("XML File", "xml"));
-            fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-            fileChooser.setAcceptAllFileFilterUsed(false);
-            int userSelection = fileChooser.showSaveDialog(parent);
-            if (userSelection == JFileChooser.APPROVE_OPTION) {
-                File fileToSave = fileChooser.getSelectedFile();
-                File samplePresentation = new File("testPresentation.xml");
-                File newPresentation = new File(fileToSave.toString() + ".xml");
-                try {
-                    Files.copy(samplePresentation.toPath(), newPresentation.toPath());
-                    java.awt.Desktop.getDesktop().edit(newPresentation);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
+            String saveFile = saveFile();
+            File samplePresentation = new File("testPresentation.xml");
+            File newPresentation = new File(saveFile);
+            try {
+                Files.copy(samplePresentation.toPath(), newPresentation.toPath());
+                java.awt.Desktop.getDesktop().edit(newPresentation);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+
         });
+
+
         fileMenu.add(menuItem = mkMenuItem(SAVE));
         menuItem.addActionListener(e -> {
+
             Accessor xmlAccessor = new XMLAccessor();
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setDialogTitle("Save JabberPoint presentation");
-            fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("XML File", "xml"));
-            fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-            fileChooser.setAcceptAllFileFilterUsed(false);
-            int userSelection = fileChooser.showSaveDialog(parent);
-            if (userSelection == JFileChooser.APPROVE_OPTION) {
-                File fileToSave = fileChooser.getSelectedFile();
-                System.out.println("Save as file: " + fileToSave.getAbsolutePath());
-                SAVEFILE = fileToSave + ".xml";
-            }
+            SAVEFILE = saveFile();
+
             try {
                 xmlAccessor.saveFile(presentation, SAVEFILE);
             } catch (IOException exc) {
@@ -164,5 +146,19 @@ public class MenuController extends MenuBar {
     //Creating a menu-item
     public MenuItem mkMenuItem(String name) {
         return new MenuItem(name, new MenuShortcut(name.charAt(0)));
+    }
+
+    public String saveFile() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Save JabberPoint presentation");
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("XML File", "xml"));
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        int userSelection = fileChooser.showSaveDialog(parent);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            return fileToSave + ".xml";
+        }
+        return null;
     }
 }
