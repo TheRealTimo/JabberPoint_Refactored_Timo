@@ -19,9 +19,9 @@ class DemoPresentation extends Accessor {
         slide.append(4, "Calling Jabberpoint without a filename");
         slide.append(4, "will show this presentation");
         slide.append(1, "Navigate:");
-        slide.append(3, "Next slide: PgDn or Enter");
-        slide.append(3, "Previous slide: PgUp or up-arrow");
-        slide.append(3, "Quit: q or Q");
+        slide.append(3, "Next slide: Enter, space, right-arrow or down-arrow");
+        slide.append(3, "Previous slide: Left-arrow or up-arrow");
+        slide.append(3, "Quit: q, Q or ESC-Key");
         presentation.append(slide);
 
         slide = new Slide();
